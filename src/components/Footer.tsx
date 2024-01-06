@@ -29,7 +29,7 @@ export default function Footer(props: FooterProps) {
     <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
       <Container maxWidth="lg">
         <Typography variant="h6" align="center" gutterBottom>
-          {title}
+          Tech Buzz
         </Typography>
         <Typography
           variant="subtitle1"
@@ -37,10 +37,17 @@ export default function Footer(props: FooterProps) {
           color="text.secondary"
           component="p"
         >
-          {description}
+          Dive into the latest news and trends in technology, gadgets, video games, and more.
         </Typography>
-        <Copyright />
-      </Container>
+        <Typography
+         variant="body2"
+         color="text.secondary"
+         align="center"
+         component="p"
+        >
+        © {new Date().getFullYear()} Alberto Puente
+        </Typography>
+        </Container>
     </Box>
   );
 }

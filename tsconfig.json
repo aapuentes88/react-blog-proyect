@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "esnext",
+    "allowJs": true,
+    // "target": "es6",
+    // "module": "esnext",
     "jsx": "react",
-    "strict": true,
-    "moduleResolution": "node",
+    // "strict": true,
+    // "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noImplicitAny": false
+    // "skipLibCheck": true,
+    // "noImplicitAny": false,
+    // "noEmit": true,
+    "baseUrl": "src"
   },
-  "include": ["src", "config-overrides.js"]
+  "include": ["src"]
 }

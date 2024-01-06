@@ -4,8 +4,10 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import MDTypography from "./MDTypography/MDTypography.js";
 
-interface SidebarProps {
+
+/*interface SidebarProps {
   archives: ReadonlyArray<{
     url: string;
     title: string;
@@ -17,19 +19,25 @@ interface SidebarProps {
   }>;
   title: string;
 }
-
-export default function Sidebar(props: SidebarProps) {
+*/
+export default function Sidebar(props/*: SidebarProps*/) {
   const { archives, description, social, title } = props;
 
   return (
     <Grid item xs={12} md={4}>
-      <Paper elevation={0} sx={{ p: 2, bgcolor: 'grey.200' }}>
-        <Typography variant="h6" gutterBottom>
+      <Paper elevation={0} sx={{ p: 2, bgcolor: 'white.200' }}>
+        {/* <Typography variant="h4" gutterBottom> */}
+        <MDTypography variant="h4" fontWeight="medium" textTransform="capitalize">
           {title}
-        </Typography>
-        <Typography>{description}</Typography>
+        </MDTypography>
+        {/* </Typography> */}
+        {/* <Typography  variant='inherit'> */}
+        <MDTypography variant="body2" fontWeight="light" textTransform="none">
+          {description}
+        </MDTypography>
+        {/* </Typography> */}
       </Paper>
-      <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
+      <Typography variant="h4" gutterBottom sx={{ mt: 3 }}>
         Archives
       </Typography>
       {archives.map((archive) => (
@@ -37,7 +45,7 @@ export default function Sidebar(props: SidebarProps) {
           {archive.title}
         </Link>
       ))}
-      <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
+      <Typography variant="h4" gutterBottom sx={{ mt: 3 }}>
         Social
       </Typography>
       {social.map((network) => (
