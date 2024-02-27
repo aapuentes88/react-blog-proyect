@@ -1,4 +1,4 @@
-import React, { useEffect, useState } /*, { useEffect, useState }*/ from 'react'
+import React, { useContext, useEffect, useState } /*, { useEffect, useState }*/ from 'react'
 
 import Header from 'components/Header';
 import MainFeaturedPost from 'components/MainFeaturedPost';
@@ -13,8 +13,11 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 // import { ThemeProvider } from '@emotion/react';
 import { Container/*, createTheme, CssBaseline*/, Grid } from '@mui/material';
 import PageLayout from 'layouts/containers/PageLayout'
-import { API_URL, ENDPOINT_MAINPOST } from 'constants/api';
+import { API_URL, ENDPOINT_POSTS } from 'constants/api';
 import { sections } from 'constants/objects';
+import Cookies from 'js-cookie';
+import AuthContext from 'context/components/AuthContext';
+import { ConnectingAirportsOutlined } from '@mui/icons-material';
 
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -24,12 +27,14 @@ import { sections } from 'constants/objects';
 // bruta talcual esta en el archivo  sin procesamiento o transformacion alguna
 //como es un archivo estatico debe colocarse en la carpeta public
 //* en este caso cargare los archivos desde el servidor y no local x eso comento el .md de public
-async function loadMarkdown()   {
+async function loadMarkdown(activeSection: string)   {
   try {
     // const response = await fetch('blogpost.md');
     // const content = await response.text()
-    const response = await fetch(`${API_URL}${ENDPOINT_MAINPOST}`);
-    const content = await response.text()    
+    console.log('loadMarkdown')
+    const response = await fetch(`${API_URL}${ENDPOINT_POSTS}/${activeSection}`);
+    const content = await response.json()
+    console.log(content.length)
     return content;
     // Aquí puedes realizar cualquier otra operación con el contenido del archivo Markdown
   } catch (error) {
@@ -95,19 +100,27 @@ const sidebar = {
 
 // const defaultTheme = createTheme();
 
-export default function Blog() {
-  
+export default function Blog(props) {
+
+  const { activeSection } = props;
   const [posts, setPosts] = useState<string[]>([]);
+
+  console.log('--------------Blog------------------')
+  console.log('activeSection', activeSection)
+  // Obtener el token de autenticación de la cookie 'accessToken'
+  const accessToken = Cookies.get('token');
+  console.log('token: ', accessToken)
 
   useEffect(() => {
     async function fetchData() {
-      const content = await loadMarkdown();
+      const content = await loadMarkdown(activeSection);
       if (content !== undefined)
-          setPosts([content]);
+          setPosts(content);
       // Aquí puedes realizar cualquier otra operación con los posts obtenidos
     }
     fetchData();
-  }, []);
+    
+  }, [activeSection]);
 
   return (
     // <ThemeProvider theme={defaultTheme}>
@@ -124,7 +137,7 @@ export default function Blog() {
           ))}
           </Grid> 
         <Grid container spacing={5} sx={{ mt: 3 }}>
-          <Main title="Introduction to Algorithms:" posts={posts} />
+          <Main title={`${activeSection} posts`.toLocaleUpperCase()} posts={posts} />
           <Sidebar
             title={sidebar.title}
             description={sidebar.description}

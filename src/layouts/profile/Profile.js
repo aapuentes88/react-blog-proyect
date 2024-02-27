@@ -65,6 +65,8 @@ function Profile() {
   const fileInputRef = useRef(null);
   const {profile} = useContext(AuthContext)
 
+  console.log(profile)
+  
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImage(URL.createObjectURL(file));

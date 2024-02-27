@@ -11,7 +11,8 @@ interface MainProps {
 
 export default function Main(props: MainProps) {
   const { posts, title } = props;
-
+  console.log('Main');
+  console.log(posts.length)
   return (
     <Grid
       item
@@ -27,11 +28,17 @@ export default function Main(props: MainProps) {
         {title}
       </Typography>
       <Divider />
-      {posts.map((post) => (
-        <Markdown className="markdown" key={post.substring(0, 40)}>
+      {
+      posts.map((post, index) => {
+        console.log('---------------------')
+        console.log(post)
+        console.log('----------------------')
+        return (
+        <Markdown className="markdown" key={index}>
           {post}
         </Markdown>
-      ))}
+      )})
+    }
     </Grid>
   );
 }

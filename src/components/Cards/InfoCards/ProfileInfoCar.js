@@ -221,7 +221,8 @@ function ProfileInfoCard({ title, action, shadow }) {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
-        }
+        },
+        credentials: 'include',
       }
   
       helpHttp()

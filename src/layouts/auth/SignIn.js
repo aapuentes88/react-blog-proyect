@@ -23,6 +23,7 @@ import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
+import Divider from '@mui/material/Divider';
 
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -41,7 +42,7 @@ import BasicLayout from "layouts/auth/components/BasicLayout.js";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import routes from "routes/routes";
-import { API_URL, ENDPOINT_SIGNIN } from "constants/api";
+import { API_URL, ENDPOINT_GOOGLE_SIGNIN, ENDPOINT_SIGNIN } from "constants/api";
 
 import { helpHttp } from 'helpers/helpHttp'
 import Cookies from 'js-cookie';
@@ -62,6 +63,41 @@ export default function SignIn() {
        setEmail(e.target.value)
     else
        setPassword(e.target.value)
+  }
+
+
+  const handleGoogleSignIn = () => {
+    console.log('Init handleGoogleSignIn')
+    // const options = {
+    //   method: 'GET',
+    //   mode: 'cors',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // }
+
+    // esto abre una pagina
+    window.open(`${API_URL}${ENDPOINT_GOOGLE_SIGNIN}`, '_self')
+    /*helpHttp().get(`${API_URL}${ENDPOINT_GOOGLE_SIGNIN}`).then((res) => {
+      if (!res.err && !(res instanceof TypeError)) {
+        console.log('-----------------------AllItsOK-----------------------------')
+
+        // Acceder al encabezado de autorización de la respuesta
+        //const authorizationHeader = res.headers.get('authorization');
+
+        //const cookieOptions = { sameSite: 'None', secure: true, expires: 7 };
+        //Cookies.set('token', authorizationHeader, cookieOptions);
+
+         // Actualizar el estado de autenticación
+        //setAuth(true)
+
+        // Redireccionar a la página principal
+        //navigate('/');
+      } else {
+        console.log('-----------------------SomeThingsIsBad-----------------------------')
+      }
+    })*/
+    console.log('End handleGoogleSignIn')
   }
 
   const handleSignIn = () => {
@@ -98,6 +134,9 @@ export default function SignIn() {
       // Redireccionar a la página principal
       navigate('/');
 
+      const accessToken = Cookies.get('token');
+      console.log('cookie token: ', accessToken)
+
       } else {
         console.log('-----------------------SomeThingsIsBad-----------------------------')
       }
@@ -107,7 +146,7 @@ export default function SignIn() {
   
 
   return (
-    <BasicLayout image={bgImage}>
+    <BasicLayout /*image={bgImage}*/>
       <Card>
         <MDBox
           variant="gradient"
@@ -162,8 +201,14 @@ export default function SignIn() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" onClick={handleSignIn} fullWidth>
+              <MDButton variant="outlined" color="info" onClick={handleSignIn} fullWidth>
                 sign in
+              </MDButton>
+            </MDBox>
+            <Divider/>
+            <MDBox mt={4} mb={1}>
+              <MDButton variant="gradient" color="info" onClick={handleGoogleSignIn} fullWidth>
+               with Google
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">

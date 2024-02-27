@@ -32,6 +32,8 @@ export default function Header(props: HeaderProps) {
 
   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
+  console.log('Headers')
+
   const handleOpenAccountMenu = (/*event*/) => setOpenAccountMenu(/*event.currentTarget*/true);
   const handleCloseAccountMenu = () => setOpenAccountMenu(false);
 
@@ -43,7 +45,8 @@ export default function Header(props: HeaderProps) {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
-        }
+        },
+        credentials: 'include'
       }
 
       helpHttp().get(`${API_URL}${ENDPOINT_LOGOUT}`, options)
@@ -83,6 +86,8 @@ export default function Header(props: HeaderProps) {
       helpHttp()
         .get(`${API_URL}${ENDPOINT_USER}`, options)
         .then((response) => {
+          console.log('response')
+          console.log(response)
           setUserData(response);
           setAuth(true); // Establecer el estado de autenticación a true
         })
@@ -227,16 +232,18 @@ export default function Header(props: HeaderProps) {
         sx={{ justifyContent: 'space-between', overflowX: 'auto' }}
       >
         {sections?.map((section) => (
+          <ReactRouterLink to={routes.find(route => route.name === section.title).route}>
           <Link
             color="inherit"
             noWrap
             key={section.title}
             variant="body2"
-            href={section.url}
+            // href={section.url}            
             sx={{ p: 1, flexShrink: 0 }}
           >
             {section.title}
           </Link>
+          </ReactRouterLink>
         ))}
       </Toolbar>
     </React.Fragment>

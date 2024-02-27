@@ -44,6 +44,9 @@ import Profile from "../layouts/profile/Profile";
 import Icon from "@mui/material/Icon";
 import Blog from "layouts/blog/Blog";
 
+import { sections } from 'constants/objects';
+
+
 // interface IRoute {
 //     type: string,
 //     name: string,
@@ -52,15 +55,26 @@ import Blog from "layouts/blog/Blog";
 //     route: string,
 //     component: any,
 // }
+// Función para generar rutas de secciones dinámicamente
+const generateSectionRoutes = (sections) => {
+  return sections.map((section) => ({
+    type: "collapse",
+    name: section.title,
+    key: section.title.toLowerCase(),
+    icon: <Icon fontSize="small">blog</Icon>,
+    route: section.url,
+    component: <Blog activeSection={section.title.toLowerCase()}/>,
+  }));
+};
 
-const routes = [
+const staticRoutes = [
   {
     type: "collapse",
     name: "Blog",
     key: "blog",
     icon: <Icon fontSize="small">blog</Icon>,
     route: "/",
-    component: <Blog />,
+    component: <Blog activeSection='main'/>,
   },
   {
     type: "collapse",
@@ -88,4 +102,6 @@ const routes = [
   },
 ];
 
-export default routes;
+const routes = [...staticRoutes, ...generateSectionRoutes(sections)];
+
+export default routes
